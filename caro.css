@@ -1,0 +1,25 @@
+.Caro_Board {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    /* 15 cột, mỗi ô rộng 40px */
+    grid-template-rows: repeat(10, 40px);
+    /* 15 hàng, mỗi ô cao 40px */
+    gap: 2px;
+    /* Khoảng cách giữa các ô */
+    border: 2px solid #333;
+}
+
+.Caro_Button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.Caro_Button:hover {
+    background-color: #e0e0e0;
+    /* Hiệu ứng khi hover */
+}
