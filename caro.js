@@ -14,8 +14,8 @@ class Caro_Element {
         this.element.removeEventListener('click',this.clickHandler);
     }
 }
-const n = 10;
-const m = 10;
+const n = 15;
+const m = 15;
 let arr;
 function createBoard(n, m) {
     const Container = document.createElement('div');
@@ -29,7 +29,7 @@ function createBoard(n, m) {
         }
 
     }
-    Container.classList.add('Caro_Board');
+    Container.classList.add('Board');
     return Container;
 }
 
