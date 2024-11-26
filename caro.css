@@ -16,7 +16,7 @@
 
     /* Cố định kích thước tổng của Board */
     width: 95%;                       /* Chiều rộng 80% màn hình */
-    height: 70%;                      /* Chiều cao 50% màn hình */
+    aspect-ratio: 1 / 1;                      
 
     /* Căn giữa màn hình */
     position: absolute;
@@ -32,10 +32,12 @@
     grid-template-columns: repeat(15, 1fr);  /* 15 cột bằng nhau */
     grid-template-rows: repeat(15, 1fr);     /* 15 hàng bằng nhau */
 }
-@media (min-width: 768px) {         /* Độ rộng màn hình từ 768px trở lên */
+@media (min-width: 1100px) {         /* Độ rộng màn hình từ 768px trở lên */
     .Board {
-        width: 50%;                 /* Chiều rộng 50% */
-        height: 90%;                /* Chiều cao 80% */
+                       /* Chiều rộng 50% */
+        width: 45%;                /* Chiều cao 80% */
+        aspect-ratio: 1 / 1; 
+        
     }
 }
 
