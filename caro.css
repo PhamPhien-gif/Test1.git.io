@@ -1,13 +1,69 @@
+/* body{
+    background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20210323/pngtree-cosmic-planet-spacecraft-cartoon-universe-background-image_592363.jpg" ) ;
+    background-repeat: no-repeat;
+    
+    background-size:  cover;
+    
+    background-color: rgb(12, 109, 154);
+} */
+
+
+.Board {
+    background-color: aqua;
+    display: grid;
+    gap: 2px;                         /* Khoảng cách giữa các ô */
+    border: 2px solid #333;
+
+    /* Cố định kích thước tổng của Board */
+    width: 80%;                       /* Chiều rộng 80% màn hình */
+    height: 50%;                      /* Chiều cao 50% màn hình */
+
+    /* Căn giữa màn hình */
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    right: 10%;
+    bottom: 25%;
+    margin: auto;
+}
+
+/* Tự động chia đều các cột và hàng */
+.Board {
+    grid-template-columns: repeat(15, 1fr);  /* 15 cột bằng nhau */
+    grid-template-rows: repeat(15, 1fr);     /* 15 hàng bằng nhau */
+}
+@media (min-width: 768px) {         /* Độ rộng màn hình từ 768px trở lên */
+    .Board {
+        width: 50%;                 /* Chiều rộng 50% */
+        height: 90%;                /* Chiều cao 80% */
+    }
+}
+
+.Board button {
+    width: 100%;                 /* Chiều rộng button chiếm toàn bộ ô */
+    height: 100%;                /* Chiều cao button chiếm toàn bộ ô */
+    font-size: 14px;             /* Kích thước chữ (có thể điều chỉnh) */
+    white-space: nowrap;         /* Không cho phép chữ xuống dòng */
+    overflow: hidden;            /* Ẩn phần nội dung vượt quá */
+    text-overflow: ellipsis;     /* Hiển thị dấu "..." nếu nội dung quá dài */
+    padding: 0;                  /* Xóa padding mặc định */
+    margin: 0;                   /* Xóa margin mặc định */
+    border: 1px solid #ccc;      /* Đường viền cho button */
+    box-sizing: border-box;      /* Đảm bảo border không ảnh hưởng kích thước */
+}
+
+
 .Caro_Board {
     display: grid;
-    grid-template-columns: repeat(10, 40px);
+    grid-template-columns: repeat(15, 40px);
     /* 15 cột, mỗi ô rộng 40px */
-    grid-template-rows: repeat(10, 40px);
+    grid-template-rows: repeat(15, 40px);
     /* 15 hàng, mỗi ô cao 40px */
     gap: 2px;
     /* Khoảng cách giữa các ô */
     border: 2px solid #333;
 }
+
 
 .Caro_Button {
     background-color: #f0f0f0;
