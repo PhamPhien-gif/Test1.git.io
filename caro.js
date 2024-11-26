@@ -1,4 +1,8 @@
 var Caro;
+var Computer_Win=0;
+var Player_Win=0;
+var Score = document.createElement('div');
+Score.innerText= "Computer " + Computer_Win + " - Player " + Player_Win;
 class Caro_Element {
     constructor(row, col) {
         this.row = row;
@@ -191,8 +195,11 @@ function Computer_Move() {
     Spread(arr[tam.x][tam.y]);
 }
 
-
-
+function Update_Score(x){
+    if(x==1) Player_Win++;
+    else Computer_Win++;
+    Score.innerText= "Computer " + Computer_Win + " - Player " + Player_Win;
+}
 
 function Check_Win(x) {
     for (let i = 0; i < n; i++) {
@@ -227,10 +234,11 @@ function handleClick(Caro_Element) {
         Caro_Element.move = 1;
         Caro_Element.element.innerText = 'X';
         if (Check_Win(1)) {
-            tam=document.createElement('div');
-            tam.innerText="You win!";
-            Caro.appendChild(tam);
+            // tam=document.createElement('div');
+            // tam.innerText="You win!";
+            // Caro.appendChild(tam);
             EndGame();
+            Update_Score(1);
             return;
         }
         if(Check_Draw()){
@@ -243,9 +251,11 @@ function handleClick(Caro_Element) {
         Spread(Caro_Element);
         Computer_Move();
         if (Check_Win(2)){
-            tam=document.createElement('div');
-            tam.innerText="You lose!";
-            Caro.appendChild(tam);
+            // Computer_Win++;
+            // tam=document.createElement('div');
+            // tam.innerText="You lose!";
+            // Caro.appendChild(tam);
+            Update_Score(2);
             EndGame();
             return;
         } 
@@ -253,10 +263,7 @@ function handleClick(Caro_Element) {
     }
 
 }
-function Score(arr) {
-    if (arr[0][0].move == 1) console.log("1");
-    else console.log("0");
-}
+
 
 function Restart(){
     for(let i=0;i<n;i++){
@@ -281,5 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
     RestartGame.innerText="Play again";
     RestartGame.addEventListener('click',()=> Restart());
     Caro.appendChild(RestartGame);
+    
+    Caro.appendChild(Score);
     // setInterval(() => Score(arr), 1000); // Thực hiện kiểm tra mỗi giây
 });
