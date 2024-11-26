@@ -2,6 +2,9 @@ var Caro;
 var Computer_Win=0;
 var Player_Win=0;
 var Score = document.createElement('div');
+const n = 15;
+const m = 15;
+let arr;
 Score.innerText= "Computer " + Computer_Win + " - Player " + Player_Win;
 class Caro_Element {
     constructor(row, col) {
@@ -18,9 +21,42 @@ class Caro_Element {
         this.element.removeEventListener('click',this.clickHandler);
     }
 }
-const n = 15;
-const m = 15;
-let arr;
+class Position {
+    constructor(x, y) {
+        this.next=null
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Stack_Move{
+    constructor(){
+        this.head=null;
+    }
+}
+
+var ListMove = new Stack_Move();
+
+function AddHead(x){
+    x.next=ListMove.head;
+    ListMove.head=x;
+}
+
+function RemoveHead() {
+    if (ListMove.head) {  // Kiểm tra xem danh sách không rỗng
+        let removed = ListMove.head;  // Lưu lại phần tử đầu tiên
+        ListMove.head = ListMove.head.next;  // Cập nhật head của danh sách
+        removed.next = null;  // Gỡ liên kết của phần tử đã bị xóa
+        // Không cần phải dùng delete, JavaScript tự giải phóng bộ nhớ khi không còn tham chiếu tới đối tượng
+    }
+}
+
+function DeleteList(){
+    while(ListMove.head){
+        RemoveHead();
+    }
+}
+
 function createBoard(n, m) {
     const Container = document.createElement('div');
     arr = new Array(n);
@@ -138,13 +174,6 @@ function v_in_a_row(v, x, i, j) {
 
 }
 
-class Position {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 function Position_Move() {
     var tam = new Position(5, 5);
     var max = 0;
@@ -189,7 +218,7 @@ function Position_Move() {
 function Computer_Move() {
 
     var tam = Position_Move();
-    
+    AddHead(tam);
     arr[tam.x][tam.y].move = 2;
     arr[tam.x][tam.y].element.innerText = 'O';
     Spread(arr[tam.x][tam.y]);
@@ -218,6 +247,7 @@ function EndGame(){
             arr[i][j].End();
         }
     }
+    DeleteList();
 }
 
 function Check_Draw(){
@@ -232,11 +262,10 @@ function Check_Draw(){
 function handleClick(Caro_Element) {
     if (Caro_Element.move == 0) {
         Caro_Element.move = 1;
+        var tam= new Position(Caro_Element.row, Caro_Element.col);
+        AddHead(tam);
         Caro_Element.element.innerText = 'X';
-        if (Check_Win(1)) {
-            // tam=document.createElement('div');
-            // tam.innerText="You win!";
-            // Caro.appendChild(tam);
+        if (Check_Win(1)) {    
             EndGame();
             Update_Score(1);
             return;
@@ -251,10 +280,6 @@ function handleClick(Caro_Element) {
         Spread(Caro_Element);
         Computer_Move();
         if (Check_Win(2)){
-            // Computer_Win++;
-            // tam=document.createElement('div');
-            // tam.innerText="You lose!";
-            // Caro.appendChild(tam);
             Update_Score(2);
             EndGame();
             return;
@@ -278,6 +303,17 @@ function Restart(){
     }
 }
 
+function Back_a_move(){
+    var tam1=ListMove.head;
+    arr[tam1.x][tam1.y].move=0;
+    arr[tam1.x][tam1.y].element.innerText='';
+    RemoveHead();
+    var tam2=ListMove.head;
+    arr[tam2.x][tam2.y].move=0;
+    arr[tam2.x][tam2.y].element.innerText='';
+    RemoveHead();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
     Caro = document.getElementById('Game_Caro');
@@ -288,7 +324,10 @@ document.addEventListener("DOMContentLoaded", function () {
     RestartGame.innerText="Play again";
     RestartGame.addEventListener('click',()=> Restart());
     Caro.appendChild(RestartGame);
-    
+    var Undo= document.createElement('button');
+    Undo.innerText='Undo';
+    Undo.addEventListener('click',()=>Back_a_move());
+    Caro.appendChild(Undo);
     Caro.appendChild(Score);
     // setInterval(() => Score(arr), 1000); // Thực hiện kiểm tra mỗi giây
 });
