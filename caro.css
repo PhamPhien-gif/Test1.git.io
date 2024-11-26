@@ -15,14 +15,14 @@
     border: 2px solid #333;
 
     /* Cố định kích thước tổng của Board */
-    width: 80%;                       /* Chiều rộng 80% màn hình */
-    height: 50%;                      /* Chiều cao 50% màn hình */
+    width: 95%;                       /* Chiều rộng 80% màn hình */
+    height: 70%;                      /* Chiều cao 50% màn hình */
 
     /* Căn giữa màn hình */
     position: absolute;
     top: 25%;
-    left: 10%;
-    right: 10%;
+    left: 2.5%;
+    right: 2.5%;
     bottom: 25%;
     margin: auto;
 }
