@@ -9,9 +9,9 @@
 
 
 .Board {
-    background-color: aqua;
+    background-color:rgb(189, 146, 94);
     display: grid;
-    gap: 2px;                         /* Khoảng cách giữa các ô */
+    gap: 1px;                         /* Khoảng cách giữa các ô */
     border: 2px solid #333;
 
     /* Cố định kích thước tổng của Board */
@@ -59,7 +59,7 @@
     /* 15 cột, mỗi ô rộng 40px */
     grid-template-rows: repeat(15, 40px);
     /* 15 hàng, mỗi ô cao 40px */
-    gap: 2px;
+    /* gap: 2px; */
     /* Khoảng cách giữa các ô */
     border: 2px solid #333;
 }
