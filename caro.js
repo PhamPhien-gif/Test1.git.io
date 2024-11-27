@@ -5,7 +5,9 @@ var Score = document.createElement('div');
 const n = 15;
 const m = 15;
 let arr;
+var Arr_Winner= new Array(5);
 Score.innerText= "Computer " + Computer_Win + " - Player " + Player_Win;
+var Container;
 class Caro_Element {
     constructor(row, col) {
         this.row = row;
@@ -28,6 +30,8 @@ class Position {
         this.y = y;
     }
 }
+
+
 
 class Stack_Move{
     constructor(){
@@ -58,7 +62,7 @@ function DeleteList(){
 }
 
 function createBoard(n, m) {
-    const Container = document.createElement('div');
+    Container = document.createElement('div');
     arr = new Array(n);
     for (let i = 0; i < n; i++) {
         arr[i] = new Array(m);
@@ -110,6 +114,11 @@ function v_straight_row(v,x,i,j){
         }
     }
     else return false;
+    if(check && v==5){
+        for (let k = 0; k <  v; k++) {
+            Arr_Winner[k]= new Position(i,j+k);   
+        }
+    }
     return check;
 }
 
@@ -126,6 +135,11 @@ function v_straight_col(v,x,i,j){
         }
     }
     else return false;
+    if(check && v==5){
+        for (let k = 0; k <  v; k++) {
+            Arr_Winner[k]= new Position(i+k,j);    
+        }
+    }
     return check;
 }
 
@@ -142,6 +156,11 @@ function v_cross_topleft_downright(v,x,i,j){
         }
     }
     else return false;
+    if(check && v==5){
+        for (let k = 0; k < v; k++) {
+            Arr_Winner[k]= new Position(i+k,j+k);
+        }
+    }
     return check;
 }
 
@@ -159,6 +178,13 @@ function v_cross_topright_downleft(v,x,i,j){
         }
     }
     else return false;
+
+    if(check && v==5){
+        for (let k = 0; k < v; k++) {
+            Arr_Winner[k]= new Position(i+k,j-k);
+        }
+    }
+
     return check;
 }
 
@@ -175,7 +201,7 @@ function v_in_a_row(v, x, i, j) {
 }
 
 function Position_Move() {
-    var tam = new Position(5, 5);
+    var tam = new Position(7, 7);
     var max = 0;
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < m; j++) {
@@ -185,8 +211,7 @@ function Position_Move() {
                     // check Computer
                     arr[i][j].move = 2;
                     if (v_in_a_row(v, 2, i, j) ) {
-                        // console.log("v=",v);
-                        if(i==3 && j==4 && v==5) console.log('ok');
+                        
                         if (v > max) { 
                             max = v;
                             tam.x = i;
@@ -217,10 +242,21 @@ function Position_Move() {
 
 function Computer_Move() {
 
-    var tam = Position_Move();
+    if(ListMove.head){
+        var t=ListMove.head.next;
+        
+        if(t){
+            console.log(t.x,t.y);
+            arr[t.x][t.y].element.classList.remove('Caro_Button_Move');
+        } 
+    }
+    var tam = Position_Move();    
     AddHead(tam);
     arr[tam.x][tam.y].move = 2;
     arr[tam.x][tam.y].element.innerText = 'O';
+    
+    
+    arr[tam.x][tam.y].element.classList.add('Caro_Button_Move');
     Spread(arr[tam.x][tam.y]);
 }
 
@@ -234,14 +270,24 @@ function Check_Win(x) {
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < m; j++) {
             if (arr[i][j].move == x) {
-                if (v_in_a_row(5, x, i, j)) return true;
+                if (v_in_a_row(5, x, i, j)){
+                    
+                    return true;
+                } 
             }
         }
     }
     return false;
 }
 
+function Display_winner(){
+    for(let i=0;i<5;i++){
+        arr[Arr_Winner[i].x][Arr_Winner[i].y].element.classList.add('Caro_Button_Win');
+    }
+}
+
 function EndGame(){
+    Display_winner();
     for(let i=0;i<n;i++){
         for(let j=0;j<m;j++){
             arr[i][j].End();
@@ -270,10 +316,7 @@ function handleClick(Caro_Element) {
             Update_Score(1);
             return;
         }
-        if(Check_Draw()){
-            tam=document.createElement('div');
-            tam.innerText="Draw!";
-            Caro.appendChild(tam);
+        if(Check_Draw()){        
             EndGame();
             return;
         }
@@ -293,14 +336,13 @@ function handleClick(Caro_Element) {
 function Restart(){
     for(let i=0;i<n;i++){
         for(let j=0;j<m;j++){
-            arr[i][j].element.innerText=' ';
-            arr[i][j].move=0;
-            arr[i][j].approve=false;
-            arr[i][j].element.removeEventListener('click', arr[i][j].clickHandler);
-            arr[i][j].element.addEventListener('click', arr[i][j].clickHandler); 
-           
+            arr[i][j].element.remove();
+            arr[i][j]=null;
         }
     }
+    arr=null;
+    createBoard(n,m);
+    Caro.appendChild(Container);
 }
 
 function Back_a_move(){
@@ -314,20 +356,43 @@ function Back_a_move(){
     RemoveHead();
 }
 
+function Computer_Go_First(){
+    for(let i=0;i<n;i++){
+        for(let j=0;j<m;j++){
+            if(arr[i][j].move!=0) return;
+        }
+    }
+    Computer_Move();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
 
     Caro = document.getElementById('Game_Caro');
     var Container = createBoard(n, m);
-    // Container.addEventListener('click',()=>Computer_Move());
+
     Caro.appendChild(Container);
+
+    //button play again
     var RestartGame= document.createElement('button');
     RestartGame.innerText="Play again";
     RestartGame.addEventListener('click',()=> Restart());
     Caro.appendChild(RestartGame);
+
+    //button Undo
     var Undo= document.createElement('button');
     Undo.innerText='Undo';
     Undo.addEventListener('click',()=>Back_a_move());
     Caro.appendChild(Undo);
+
+    // button máy đánh
+    var Computer_Move_First = document.createElement('button');
+    Computer_Move_First.innerText="Computer go first";
+    Computer_Move_First.addEventListener('click',()=>Computer_Go_First());
+    Caro.appendChild(Computer_Move_First);
+
+
     Caro.appendChild(Score);
+    
+
     // setInterval(() => Score(arr), 1000); // Thực hiện kiểm tra mỗi giây
 });
