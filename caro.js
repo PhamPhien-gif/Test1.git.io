@@ -349,6 +349,7 @@ function Back_a_move(){
     var tam1=ListMove.head;
     arr[tam1.x][tam1.y].move=0;
     arr[tam1.x][tam1.y].element.innerText='';
+    arr[tam1.x][tam1.y].element.classList.remove('Caro_Button_Move');
     RemoveHead();
     var tam2=ListMove.head;
     arr[tam2.x][tam2.y].move=0;
