@@ -271,7 +271,6 @@ function Check_Win(x) {
         for (let j = 0; j < m; j++) {
             if (arr[i][j].move == x) {
                 if (v_in_a_row(5, x, i, j)){
-                    
                     return true;
                 } 
             }
@@ -377,21 +376,26 @@ document.addEventListener("DOMContentLoaded", function () {
     var RestartGame= document.createElement('button');
     RestartGame.innerText="Play again";
     RestartGame.addEventListener('click',()=> Restart());
-    Caro.appendChild(RestartGame);
+    // Caro.appendChild(RestartGame);
 
     //button Undo
     var Undo= document.createElement('button');
     Undo.innerText='Undo';
     Undo.addEventListener('click',()=>Back_a_move());
-    Caro.appendChild(Undo);
+    // Caro.appendChild(Undo);
 
     // button máy đánh
     var Computer_Move_First = document.createElement('button');
-    Computer_Move_First.innerText="Computer go first";
+    Computer_Move_First.innerText="Computer first";
     Computer_Move_First.addEventListener('click',()=>Computer_Go_First());
-    Caro.appendChild(Computer_Move_First);
+    // Caro.appendChild(Computer_Move_First);
 
+    var Quer= document.getElementById('Query');
+    Quer.appendChild(RestartGame);
+    Quer.appendChild(Undo);
+    Quer.appendChild(Computer_Move_First);
 
+    Score.classList.add('Score');
     Caro.appendChild(Score);
     
 
