@@ -4,6 +4,6 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/Practice_Web/", // Đổi thành tên repo của bạn
+  base: "/Test1.git.io/", // Đổi thành tên repo của bạn
 });
 
