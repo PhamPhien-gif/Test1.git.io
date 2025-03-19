@@ -11,7 +11,7 @@ import LoginPage from "@/components/pages/login-page"
 
 
 // Define routes
-export type Route = "shop" | "newstand" | "who-we-are" | "profile" | "basket" | "login"
+export type Route = "shop" | "newstand" | "who-we-are" | "profile" | "login" | "basket" 
 
 // Create context for routing and basket state
 type AppContextType = {

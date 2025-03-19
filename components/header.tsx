@@ -38,7 +38,13 @@ export default function Header() {
             onClick={() => navigateTo("profile")}
             className={`hover:text-primary transition-colors ${isActive("profile") ? "text-primary font-medium" : "text-foreground"}`}
           >
-            My profile
+            My pro5
+          </button>
+          <button
+            onClick={() => navigateTo("login")}
+            className={`hover:text-primary transition-colors ${isActive("login") ? "text-primary font-medium" : "text-foreground"}`}
+          >
+            Login
           </button>
         </nav>
 
