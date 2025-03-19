@@ -7,9 +7,11 @@ import NewstandPage from "@/components/pages/newstand-page"
 import WhoWeArePage from "@/components/pages/who-we-are-page"
 import ProfilePage from "@/components/pages/profile-page"
 import BasketPage from "@/components/pages/basket-page"
+import LoginPage from "@/components/pages/login-page"
+
 
 // Define routes
-export type Route = "shop" | "newstand" | "who-we-are" | "profile" | "basket"
+export type Route = "shop" | "newstand" | "who-we-are" | "profile" | "basket" | "login"
 
 // Create context for routing and basket state
 type AppContextType = {
@@ -21,9 +23,9 @@ type AppContextType = {
 
 const AppContext = createContext<AppContextType>({
   currentRoute: "shop",
-  navigateTo: () => {},
+  navigateTo: () => { },
   basketCount: 3,
-  updateBasketCount: () => {},
+  updateBasketCount: () => { },
 })
 
 export const useAppContext = () => useContext(AppContext)
@@ -55,6 +57,8 @@ export function MainApp() {
         return <ProfilePage />
       case "basket":
         return <BasketPage />
+      case "login":
+        return <LoginPage />
       default:
         return <ShopPage />
     }
